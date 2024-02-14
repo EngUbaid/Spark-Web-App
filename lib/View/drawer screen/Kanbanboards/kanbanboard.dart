@@ -32,14 +32,15 @@ class _TaskWidgetState extends State<TaskWidget> {
         child: widget.task,
       ),
       childWhenDragging: Container(),
-      // onDragCompleted: () async {
-      //   final movetask = await showdragAlertDialog(context);
-      //   if (movetask != null && movetask) {
-      //     setState(() {
-      //       widget.onDelete(widget.task);
-      //     });
-      //   }
-      // },
+
+      onDragCompleted: () async {
+        final movetask = await  _CustomColumnWidgetState().showdragAlertDialog(context);
+        if (movetask != null && movetask) {
+          setState(() {
+            widget.onDelete(widget.task);
+          });
+        }
+      },
     );
   }
 }
@@ -85,7 +86,9 @@ class _CustomColumnWidgetState extends State<CustomColumnWidget> {
                   return true;
                 },
                 onAccept: (data) async {
-                  final movetasks = await showdragAlertDialog(context);
+
+                   final movetasks = await showdragAlertDialog(context);
+                 // final movetasks = await _dailogshowState();
 
                   if (movetasks) {
                     setState(() {
@@ -93,6 +96,16 @@ class _CustomColumnWidgetState extends State<CustomColumnWidget> {
                     });
                   }
                 },
+
+                // onAccept: (data) async {
+                //   final movetasks = await showdragAlertDialog(context);
+
+                //   if (movetasks) {
+                //     setState(() {
+                //       widget.tasks.add(data);
+                //     });
+                //   }
+                // },
                 builder: (context, candidateData, rejectedData) {
                   return ListView.builder(
                     itemCount: widget.tasks.length,
@@ -114,6 +127,38 @@ class _CustomColumnWidgetState extends State<CustomColumnWidget> {
           ],
         ),
       ],
+    );
+  }
+   showdragAlertDialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: 200,
+          width: 200,
+          child: AlertDialog(
+            title: Text("Move Task?"),
+            content: Text("Do you want to move this task to the new column?"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context, false);
+                },
+                child: Text("Cancel"),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context,true);
+                  // setState(() {
+                  //   _TaskWidgetState().dialogShown = true;
+                  // });
+                },
+                child: Text("Move"),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
@@ -346,32 +391,18 @@ class _KanbanboardclassState extends State<Kanbanboardclass> {
   }
 }
 
-showdragAlertDialog(BuildContext context) {
-  return showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return Container(
-        height: 200,
-        width: 200,
-        child: AlertDialog(
-          title: Text("Move Task?"),
-          content: Text("Do you want to move this task to the new column?"),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context, false);
-              },
-              child: Text("Cancel"),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context, true);
-              },
-              child: Text("Move"),
-            ),
-          ],
-        ),
-      );
-    },
-  );
-}
+// class dailogshow extends StatefulWidget {
+//   const dailogshow({super.key});
+
+//   @override
+//   State<dailogshow> createState() => _dailogshowState();
+// }
+
+// class _dailogshowState extends State<dailogshow> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return showdragAlertDialog(context);
+//   }
+
+ 
+// }
