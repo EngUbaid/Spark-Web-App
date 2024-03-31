@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:spark/View/drawer%20screen/kanbanbobdy/kanbanbodycard.dart';
+import 'package:spark/View/drawer%20screen/kanbanboardCards/kanbanbodycard.dart';
 
 class TaskWidget extends StatefulWidget {
-  final cardanotherdatas task;
-
-  final ValueChanged<cardanotherdatas> onDelete;
-
+  final kanbanboardcards task;
+  final ValueChanged<kanbanboardcards> onDelete;
   final Key key;
 
   TaskWidget({
@@ -20,37 +18,35 @@ class TaskWidget extends StatefulWidget {
 }
 
 class _TaskWidgetState extends State<TaskWidget> {
-  bool dialogShown = false;
-  var movedrag = '';
-
   @override
   Widget build(BuildContext context) {
-    return Draggable<cardanotherdatas>(
+    return Draggable<kanbanboardcards>(
       data: widget.task,
       child: widget.task,
       feedback: Material(
         child: widget.task,
       ),
       childWhenDragging: Container(),
-
-      onDragCompleted: () async {
-        final movetask = await  _CustomColumnWidgetState().showdragAlertDialog(context);
-        if (movetask != null && movetask) {
-          setState(() {
-            widget.onDelete(widget.task);
-          });
-        }
+      onDragStarted: () {
+        print("Task dragged from: ${widget.task.columnTitle}");
       },
+      // onDragEnd: (details) {
+      //   if (details.wasAccepted) {
+      //     widget.onDelete(widget.task);
+      //   }
+      // },
     );
   }
 }
 
 class CustomColumnWidget extends StatefulWidget {
+  final String columnTitle;
   final Widget titleWidget;
-  final List<cardanotherdatas> tasks;
-  final ValueChanged<cardanotherdatas> onDelete;
+  final List<kanbanboardcards> tasks;
+  final ValueChanged<kanbanboardcards> onDelete;
 
   const CustomColumnWidget({
+    required this.columnTitle,
     required this.titleWidget,
     required this.tasks,
     required this.onDelete,
@@ -61,7 +57,6 @@ class CustomColumnWidget extends StatefulWidget {
 }
 
 class _CustomColumnWidgetState extends State<CustomColumnWidget> {
-  // bool shouldMoveTask = false;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -81,31 +76,20 @@ class _CustomColumnWidgetState extends State<CustomColumnWidget> {
               padding: EdgeInsets.only(left: 10),
               height: MediaQuery.of(context).size.height - 220,
               width: 250,
-              child: DragTarget<cardanotherdatas>(
+              child: DragTarget<kanbanboardcards>(
                 onWillAccept: (data) {
                   return true;
                 },
                 onAccept: (data) async {
-
-                   final movetasks = await showdragAlertDialog(context);
-                 // final movetasks = await _dailogshowState();
-
-                  if (movetasks) {
+                  final movetask = await showdragAlertDialog(context);
+                  if (movetask == true) {
                     setState(() {
                       widget.tasks.add(data);
                     });
+
+                    print("Task dropped to: ${widget.columnTitle}");
                   }
                 },
-
-                // onAccept: (data) async {
-                //   final movetasks = await showdragAlertDialog(context);
-
-                //   if (movetasks) {
-                //     setState(() {
-                //       widget.tasks.add(data);
-                //     });
-                //   }
-                // },
                 builder: (context, candidateData, rejectedData) {
                   return ListView.builder(
                     itemCount: widget.tasks.length,
@@ -129,34 +113,32 @@ class _CustomColumnWidgetState extends State<CustomColumnWidget> {
       ],
     );
   }
-   showdragAlertDialog(BuildContext context) {
-    return showDialog(
+
+  Future<bool?> showdragAlertDialog(BuildContext context) async {
+    return await showDialog<bool?>(
       context: context,
       builder: (BuildContext context) {
-        return Container(
-          height: 200,
-          width: 200,
-          child: AlertDialog(
-            title: Text("Move Task?"),
-            content: Text("Do you want to move this task to the new column?"),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context, false);
-                },
-                child: Text("Cancel"),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context,true);
-                  // setState(() {
-                  //   _TaskWidgetState().dialogShown = true;
-                  // });
-                },
-                child: Text("Move"),
-              ),
-            ],
-          ),
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return AlertDialog(
+              title: Text("Move Task?"),
+              content: Text("Do you want to move this task to the new column?"),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context, false);
+                  },
+                  child: Text("Cancel"),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context, true);
+                  },
+                  child: Text("Move"),
+                ),
+              ],
+            );
+          },
         );
       },
     );
@@ -184,10 +166,12 @@ class _KanbanboardclassState extends State<Kanbanboardclass> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             CustomColumnWidget(
+                columnTitle: "To do",
                 onDelete: (value) {},
                 titleWidget: cardtittle("To do", "24"),
                 tasks: List.generate(10, (index) {
-                  return cardanotherdatas(
+                  return kanbanboardcards(
+                    columnTitle: "To do",
                     tittle1: index == 0 ? "Whitney Dziama" : "John Doe",
                     tittle2: index == 0 ? "41 Smith St Lincoin" : "123 Main St",
                     tittle3:
@@ -205,10 +189,12 @@ class _KanbanboardclassState extends State<Kanbanboardclass> {
                   );
                 })),
             CustomColumnWidget(
+                columnTitle: "in progress",
                 onDelete: (value) {},
                 titleWidget: cardtittle("in progress", "24"),
                 tasks: List.generate(10, (index) {
-                  return cardanotherdatas(
+                  return kanbanboardcards(
+                    columnTitle: "in progress",
                     tittle1: index == 0
                         ? "stev smith"
                         : index == 1
@@ -231,112 +217,117 @@ class _KanbanboardclassState extends State<Kanbanboardclass> {
                     tittle10: index == 0 ? "SS: 10-27-2022" : "SS: 11-30-2022",
                   );
                 })),
+            // CustomColumnWidget(
+            //     onDelete: (value) {},
+            //     titleWidget: cardtittle("in progressss", "24"),
+            //     tasks: []),
             CustomColumnWidget(
-                onDelete: (value) {},
-                titleWidget: cardtittle("in progress", "24"),
-                tasks: []),
-            CustomColumnWidget(
-                onDelete: (value) {},
-                titleWidget: cardtittle("Not Completed", "24"),
-                tasks: []),
-            CustomColumnWidget(
-                onDelete: (value) {},
-                titleWidget: cardtittle("To do", "24"),
-                tasks: List.generate(10, (index) {
-                  return cardanotherdatas(
-                    tittle1: index == 0 ? "Whitney Dziama" : "John Doe",
-                    tittle2: index == 0 ? "41 Smith St Lincoin" : "123 Main St",
-                    tittle3:
-                        index == 0 ? "Lincoin RI 02865" : "City, State 12345",
-                    tittle4: index == 0
-                        ? "Dziama, Whitney - 1683"
-                        : "Doe, John - 1234",
-                    tittle5: "tittle5",
-                    tittle6: index == 0 ? "Rhode Island E" : "Some Location",
-                    tittle7:
-                        index == 0 ? "Rep: Rick Steehier" : "Rep: Jane Doe",
-                    tittle8: index == 0 ? "SS: 10-27-2022" : "SS: 11-30-2022",
-                    tittle9: index == 0 ? "T: Wolfpack, RS" : "T: Team XYZ",
-                    tittle10: index == 0 ? "SS: 10-27-2022" : "SS: 11-30-2022",
-                  );
-                })),
-            CustomColumnWidget(
-                onDelete: (value) {},
-                titleWidget: cardtittle("To do", "24"),
-                tasks: List.generate(10, (index) {
-                  return cardanotherdatas(
-                    tittle1: index == 0 ? "Whitney Dziama" : "John Doe",
-                    tittle2: index == 0 ? "41 Smith St Lincoin" : "123 Main St",
-                    tittle3:
-                        index == 0 ? "Lincoin RI 02865" : "City, State 12345",
-                    tittle4: index == 0
-                        ? "Dziama, Whitney - 1683"
-                        : "Doe, John - 1234",
-                    tittle5: "tittle5",
-                    tittle6: index == 0 ? "Rhode Island E" : "Some Location",
-                    tittle7:
-                        index == 0 ? "Rep: Rick Steehier" : "Rep: Jane Doe",
-                    tittle8: index == 0 ? "SS: 10-27-2022" : "SS: 11-30-2022",
-                    tittle9: index == 0 ? "T: Wolfpack, RS" : "T: Team XYZ",
-                    tittle10: index == 0 ? "SS: 10-27-2022" : "SS: 11-30-2022",
-                  );
-                })),
-            CustomColumnWidget(
-                onDelete: (value) {},
-                titleWidget: cardtittle("in progress", "24"),
-                tasks: List.generate(10, (index) {
-                  return cardanotherdatas(
-                    tittle1: index == 0
-                        ? "stev smith"
-                        : index == 1
-                            ? "John"
-                            : index == 2
-                                ? "warner"
-                                : "kohli",
-                    tittle2: index == 0 ? "kane" : "123 Main St",
-                    tittle3:
-                        index == 0 ? "Lincoin RI 02865" : "City, State 12345",
-                    tittle4: index == 0
-                        ? "Dziama, Whitney - 1683"
-                        : "Doe, John - 1234",
-                    tittle5: "tittle5",
-                    tittle6: index == 0 ? "Rhode Island E" : "Some Location",
-                    tittle7:
-                        index == 0 ? "Rep: Rick Steehier" : "Rep: Jane Doe",
-                    tittle8: index == 0 ? "SS: 10-27-2022" : "SS: 11-30-2022",
-                    tittle9: index == 0 ? "T: Wolfpack, RS" : "T: Team XYZ",
-                    tittle10: index == 0 ? "SS: 10-27-2022" : "SS: 11-30-2022",
-                  );
-                })),
-            CustomColumnWidget(
-                onDelete: (value) {},
-                titleWidget: cardtittle("in progress", "24"),
-                tasks: []),
-            CustomColumnWidget(
+                columnTitle: "Not Completed",
                 onDelete: (value) {},
                 titleWidget: cardtittle("Not Completed", "24"),
                 tasks: []),
-            CustomColumnWidget(
-                onDelete: (value) {},
-                titleWidget: cardtittle("To do", "24"),
-                tasks: List.generate(10, (index) {
-                  return cardanotherdatas(
-                    tittle1: index == 0 ? "Whitney Dziama" : "John Doe",
-                    tittle2: index == 0 ? "41 Smith St Lincoin" : "123 Main St",
-                    tittle3:
-                        index == 0 ? "Lincoin RI 02865" : "City, State 12345",
-                    tittle4: index == 0
-                        ? "Dziama, Whitney - 1683"
-                        : "Doe, John - 1234",
-                    tittle5: "tittle5",
-                    tittle6: index == 0 ? "Rhode Island E" : "Some Location",
-                    tittle7:
-                        index == 0 ? "Rep: Rick Steehier" : "Rep: Jane Doe",
-                    tittle8: index == 0 ? "SS: 10-27-2022" : "SS: 11-30-2022",
-                    tittle9: index == 0 ? "T: Wolfpack, RS" : "T: Team XYZ",
-                    tittle10: index == 0 ? "SS: 10-27-2022" : "SS: 11-30-2022",
-                  );
-                })),
+            // CustomColumnWidget(
+            //     onDelete: (value) {},
+            //     titleWidget: cardtittle("Not Done ", "24"),
+            //     tasks: List.generate(10, (index) {
+            //       return cardanotherdatas(
+            //         columnTitle: "Not Done ",
+            //         tittle1: index == 0 ? "Whitney Dziama" : "John Doe",
+            //         tittle2: index == 0 ? "41 Smith St Lincoin" : "123 Main St",
+            //         tittle3:
+            //             index == 0 ? "Lincoin RI 02865" : "City, State 12345",
+            //         tittle4: index == 0
+            //             ? "Dziama, Whitney - 1683"
+            //             : "Doe, John - 1234",
+            //         tittle5: "tittle5",
+            //         tittle6: index == 0 ? "Rhode Island E" : "Some Location",
+            //         tittle7:
+            //             index == 0 ? "Rep: Rick Steehier" : "Rep: Jane Doe",
+            //         tittle8: index == 0 ? "SS: 10-27-2022" : "SS: 11-30-2022",
+            //         tittle9: index == 0 ? "T: Wolfpack, RS" : "T: Team XYZ",
+            //         tittle10: index == 0 ? "SS: 10-27-2022" : "SS: 11-30-2022",
+            //       );
+            //     })),
+            // CustomColumnWidget(
+            //     onDelete: (value) {},
+            //     titleWidget: cardtittle("on holt not", "24"),
+            //     tasks: List.generate(10, (index) {
+            //       return cardanotherdatas(
+            //         columnTitle: "on holt not",
+            //         tittle1: index == 0 ? "Whitney Dziama" : "John Doe",
+            //         tittle2: index == 0 ? "41 Smith St Lincoin" : "123 Main St",
+            //         tittle3:
+            //             index == 0 ? "Lincoin RI 02865" : "City, State 12345",
+            //         tittle4: index == 0
+            //             ? "Dziama, Whitney - 1683"
+            //             : "Doe, John - 1234",
+            //         tittle5: "tittle5",
+            //         tittle6: index == 0 ? "Rhode Island E" : "Some Location",
+            //         tittle7:
+            //             index == 0 ? "Rep: Rick Steehier" : "Rep: Jane Doe",
+            //         tittle8: index == 0 ? "SS: 10-27-2022" : "SS: 11-30-2022",
+            //         tittle9: index == 0 ? "T: Wolfpack, RS" : "T: Team XYZ",
+            //         tittle10: index == 0 ? "SS: 10-27-2022" : "SS: 11-30-2022",
+            //       );
+            //     })),
+            // CustomColumnWidget(
+            //     onDelete: (value) {},
+            //     titleWidget: cardtittle("not in progres", "24"),
+            //     tasks: List.generate(10, (index) {
+            //       return cardanotherdatas(
+            //         columnTitle: "not in progres",
+            //         tittle1: index == 0
+            //             ? "stev smith"
+            //             : index == 1
+            //                 ? "John"
+            //                 : index == 2
+            //                     ? "warner"
+            //                     : "kohli",
+            //         tittle2: index == 0 ? "kane" : "123 Main St",
+            //         tittle3:
+            //             index == 0 ? "Lincoin RI 02865" : "City, State 12345",
+            //         tittle4: index == 0
+            //             ? "Dziama, Whitney - 1683"
+            //             : "Doe, John - 1234",
+            //         tittle5: "tittle5",
+            //         tittle6: index == 0 ? "Rhode Island E" : "Some Location",
+            //         tittle7:
+            //             index == 0 ? "Rep: Rick Steehier" : "Rep: Jane Doe",
+            //         tittle8: index == 0 ? "SS: 10-27-2022" : "SS: 11-30-2022",
+            //         tittle9: index == 0 ? "T: Wolfpack, RS" : "T: Team XYZ",
+            //         tittle10: index == 0 ? "SS: 10-27-2022" : "SS: 11-30-2022",
+            //       );
+            //     })),
+            // CustomColumnWidget(
+            //     onDelete: (value) {},
+            //     titleWidget: cardtittle("in progress", "24"),
+            //     tasks: []),
+            // CustomColumnWidget(
+            //     onDelete: (value) {},
+            //     titleWidget: cardtittle("Not Completed", "24"),
+            //     tasks: []),
+            // CustomColumnWidget(
+            //     onDelete: (value) {},
+            //     titleWidget: cardtittle("noo", "24"),
+            //     tasks: List.generate(10, (index) {
+            //       return cardanotherdatas(
+            //         columnTitle: "noo",
+            //         tittle1: index == 0 ? "Whitney Dziama" : "John Doe",
+            //         tittle2: index == 0 ? "41 Smith St Lincoin" : "123 Main St",
+            //         tittle3:
+            //             index == 0 ? "Lincoin RI 02865" : "City, State 12345",
+            //         tittle4: index == 0
+            //             ? "Dziama, Whitney - 1683"
+            //             : "Doe, John - 1234",
+            //         tittle5: "tittle5",
+            //         tittle6: index == 0 ? "Rhode Island E" : "Some Location",
+            //         tittle7:
+            //             index == 0 ? "Rep: Rick Steehier" : "Rep: Jane Doe",
+            //         tittle8: index == 0 ? "SS: 10-27-2022" : "SS: 11-30-2022",
+            //         tittle9: index == 0 ? "T: Wolfpack, RS" : "T: Team XYZ",
+            //         tittle10: index == 0 ? "SS: 10-27-2022" : "SS: 11-30-2022",
+            //       );
+            //     })),
           ],
         ),
       ),
@@ -390,19 +381,3 @@ class _KanbanboardclassState extends State<Kanbanboardclass> {
     );
   }
 }
-
-// class dailogshow extends StatefulWidget {
-//   const dailogshow({super.key});
-
-//   @override
-//   State<dailogshow> createState() => _dailogshowState();
-// }
-
-// class _dailogshowState extends State<dailogshow> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return showdragAlertDialog(context);
-//   }
-
- 
-// }

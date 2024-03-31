@@ -39,7 +39,7 @@ class _MultidropdownsttingState extends State<Multidropdownstting> {
         debugPrint(options.toString());
       },
       options: <ValueItem>[
-        ValueItem(label: widget.tittle1, value: widget.tittle1),
+        ValueItem(label: widget.tittle1, value: widget.tittle1, ),
         ValueItem(label: widget.tittle2, value: widget.tittle2),
         ValueItem(label: widget.tittle3, value: widget.tittle3),
         ValueItem(label: widget.tittle4, value: widget.tittle4),
@@ -49,7 +49,7 @@ class _MultidropdownsttingState extends State<Multidropdownstting> {
       selectionType: SelectionType.multi,
       chipConfig: const ChipConfig(wrapType: WrapType.wrap),
       dropdownHeight: 200,
-      optionTextStyle: const TextStyle(fontSize: 16),
+      optionTextStyle: const TextStyle(fontSize: 14),
       selectedOptionIcon: const Icon(Icons.check_circle),
     );
   }

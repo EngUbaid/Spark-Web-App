@@ -1,7 +1,7 @@
 import 'package:antd_icons/antd_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:spark/common/Dropdown.dart';
 import 'package:spark/common/mulit_dropdown.dart';
+import 'package:spark/common/single_dropdown.dart';
 
 class Settingdrawerdat extends StatefulWidget {
   const Settingdrawerdat({super.key});
@@ -27,10 +27,12 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return Container(
+      alignment: Alignment.topLeft,
+      width: 350,
       color: Colors.white,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(15.0),
         child: Column(
           children: [
             ListTile(
@@ -38,8 +40,10 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                 onTap: () {
                   Navigator.pop(context);
                 },
-                child: Container(
-                    height: 18, width: 18, child: AntdIcons.outlined.close.svg()),
+                child: Icon(
+                  Icons.close,
+                  size: 18,
+                ),
               ),
               title: Text("Job Filters"),
             ),
@@ -53,24 +57,24 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
               child: ListView(
                 children: [
                   //first textfield
-              
                   const Text(
                     "Survey Scheduled Date",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
                   ),
-              
+
                   const SizedBox(
                     height: 10,
                   ),
                   Container(
-                    height: 35,
+                    height: 30,
                     child: TextField(
                       onTap: () {
                         showdate();
                       },
                       decoration: InputDecoration(
                         suffixIcon: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.only(
+                              left: 10.0, bottom: 2.0, right: 10),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -102,7 +106,7 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                           ),
                         ),
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10)),
+                            borderRadius: BorderRadius.circular(5)),
                         contentPadding: EdgeInsets.symmetric(horizontal: 10),
                       ),
                     ),
@@ -110,9 +114,9 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                   const SizedBox(
                     height: 10,
                   ),
-              
+
                   // second textfield
-              
+
                   const Text(
                     "Install Scheduled Date",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
@@ -121,14 +125,15 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                     height: 10,
                   ),
                   Container(
-                    height: 35,
+                    height: 30,
                     child: TextField(
                       onTap: () {
                         showdatetwo();
                       },
                       decoration: InputDecoration(
                           suffixIcon: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.only(
+                                left: 10.0, bottom: 2.0, right: 10),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -159,7 +164,7 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                             ),
                           ),
                           border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10)),
+                              borderRadius: BorderRadius.circular(5)),
                           contentPadding: EdgeInsets.symmetric(horizontal: 10)),
                     ),
                   ),
@@ -175,7 +180,7 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                     height: 10,
                   ),
                   Container(
-                    height: 35,
+                    height: 30,
                     child: const Multidropdownstting(
                       hintext: '',
                       tittle1: 'Team 1',
@@ -188,7 +193,7 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                   const SizedBox(
                     height: 10,
                   ),
-              
+
                   //forth textfield
                   const Text(
                     "Sales Rep ",
@@ -210,7 +215,7 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                   const SizedBox(
                     height: 10,
                   ),
-              
+
                   //fifth textfield
                   const Text(
                     "Job Stages ",
@@ -220,7 +225,7 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                     height: 10,
                   ),
                   Container(
-                    height: 35,
+                    height: 30,
                     child: const Multidropdownstting(
                         hintext: '',
                         tittle1: 'Stage 1 ',
@@ -232,7 +237,7 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                   const SizedBox(
                     height: 10,
                   ),
-              
+
                   //six textfield
                   const Text(
                     "Days in Stages ",
@@ -242,7 +247,7 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                     height: 10,
                   ),
                   Container(
-                    height: 35,
+                    height: 30,
                     child: TextField(
                       decoration: InputDecoration(
                           hintText: 'i.e.50',
@@ -255,7 +260,7 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                   const SizedBox(
                     height: 10,
                   ),
-              
+
                   //seven textfield
                   const Text(
                     "Utility Company ",
@@ -265,7 +270,7 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                     height: 10,
                   ),
                   Container(
-                    height: 35,
+                    height: 30,
                     child: const Multidropdownstting(
                         hintext: '',
                         tittle1: 'Company 1 ',
@@ -286,7 +291,7 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                     height: 10,
                   ),
                   Container(
-                    height: 35,
+                    height: 30,
                     child: const Multidropdownstting(
                         hintext: '',
                         tittle1: 'Inverters 1 ',
@@ -298,7 +303,7 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                   const SizedBox(
                     height: 10,
                   ),
-              
+
                   //nine textfield
                   const Text(
                     "Lead Source  ",
@@ -308,7 +313,7 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                     height: 10,
                   ),
                   Container(
-                    height: 35,
+                    height: 30,
                     child: const Multidropdownstting(
                         hintext: '',
                         tittle1: 'Lead Source 1 ',
@@ -320,7 +325,7 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                   const SizedBox(
                     height: 10,
                   ),
-              
+
                   //ten textfield
                   const Text(
                     "Module Type ",
@@ -330,7 +335,7 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                     height: 10,
                   ),
                   Container(
-                    height: 35,
+                    height: 30,
                     child: const Multidropdownstting(
                         hintext: '',
                         tittle1: 'Module Type 1 ',
@@ -342,7 +347,7 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                   const SizedBox(
                     height: 10,
                   ),
-              
+
                   //eleven textfield
                   const Text(
                     "Build Partners ",
@@ -352,7 +357,7 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                     height: 10,
                   ),
                   Container(
-                    height: 35,
+                    height: 30,
                     child: const Multidropdownstting(
                         hintext: '',
                         tittle1: 'Build Partners 1 ',
@@ -364,7 +369,7 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                   const SizedBox(
                     height: 10,
                   ),
-              
+
                   //12 textfield
                   const Text(
                     "States ",
@@ -374,7 +379,7 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                     height: 10,
                   ),
                   Container(
-                    height: 35,
+                    height: 30,
                     child: const Multidropdownstting(
                         hintext: '',
                         tittle1: 'Stages 1 ',
@@ -386,7 +391,7 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                   const SizedBox(
                     height: 10,
                   ),
-              
+
                   //13 textfield
                   const Text(
                     "City ",
@@ -396,19 +401,30 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                     height: 10,
                   ),
                   Container(
-                    height: 35,
-                    child: TextField(
-                      decoration: InputDecoration(
-                        suffixIcon: Dropdownsetting(),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                      ),
-                    ),
+                    height: 30,
+                    color: Colors.white,
+                    child: const singledropdown(
+                        hinttext: "",
+                        tittle1: "tittle1",
+                        tittle2: "tittle2",
+                        tittle3: "tittle3",
+                        tittle4: "tittle4",
+                        tittle5: "tittle5"),
                   ),
+                  // Container(
+                  //   height: 30,
+                  //   child: TextField(
+                  //     decoration: InputDecoration(
+                  //       suffixIcon: Dropdownsetting(),
+                  //       border: OutlineInputBorder(
+                  //           borderRadius: BorderRadius.circular(5)),
+                  //     ),
+                  //   ),
+                  // ),
                   const SizedBox(
                     height: 10,
                   ),
-              
+
                   //14 textfield
                   const Text(
                     "Organization ",
@@ -418,7 +434,7 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                     height: 10,
                   ),
                   Container(
-                    height: 35,
+                    height: 30,
                     child: const Multidropdownstting(
                         hintext: '',
                         tittle1: 'Organization 1 ',
@@ -430,7 +446,7 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                   const SizedBox(
                     height: 10,
                   ),
-              
+
                   //15 textfield
                   const Text(
                     "Financing ",
@@ -440,7 +456,7 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                     height: 10,
                   ),
                   Container(
-                    height: 35,
+                    height: 30,
                     child: const Multidropdownstting(
                         hintext: '',
                         tittle1: 'Financing 1 ',
@@ -452,7 +468,7 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                   const SizedBox(
                     height: 10,
                   ),
-              
+
                   //16 textfield
                   const Text(
                     "Battery Type ",
@@ -461,20 +477,31 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Container(
-                    height: 35,
-                    child: TextField(
-                      decoration: InputDecoration(
-                        suffixIcon: Dropdownsetting(),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                      ),
-                    ),
+                      Container(
+                    height: 30,
+                    color: Colors.white,
+                    child: const singledropdown(
+                        hinttext: "",
+                        tittle1: "tittle1",
+                        tittle2: "tittle2",
+                        tittle3: "tittle3",
+                        tittle4: "tittle4",
+                        tittle5: "tittle5"),
                   ),
+                  // Container(
+                  //   height: 30,
+                  //   child: TextField(
+                  //     decoration: InputDecoration(
+                  //       suffixIcon: Dropdownsetting(),
+                  //       border: OutlineInputBorder(
+                  //           borderRadius: BorderRadius.circular(5)),
+                  //     ),
+                  //   ),
+                  // ),
                   const SizedBox(
                     height: 10,
                   ),
-              
+
                   //17 and 18 textfield
                   const Text(
                     "Contract Price  ",
@@ -483,42 +510,44 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: 35,
-                          width: MediaQuery.of(context).size.width / 8.7,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              hintText: '\$ Min Value',
-                              hintStyle: TextStyle(fontSize: 12),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                            ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 30,
+                        width: 155,
+                        // width: MediaQuery.of(context).size.width / 8.7,
+                        child: TextField(
+                          decoration: InputDecoration(
+                            hintText: '\$ Min Value',
+                            hintStyle: TextStyle(fontSize: 12),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5)),
                           ),
                         ),
-                        Container(
-                          height: 35,
-                          width: MediaQuery.of(context).size.width / 8.7,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              hintText: '\$ Max Value',
-                              hintStyle: TextStyle(fontSize: 12),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                            ),
+                      ),
+                      Container(
+                        height: 30,
+                        width: 155,
+                        //  width: MediaQuery.of(context).size.width / 8.7,
+                        child: TextField(
+                          decoration: InputDecoration(
+                            hintText: '\$ Max Value',
+                            hintStyle: TextStyle(fontSize: 12),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5)),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-              
+
                   //19 and 20 textfield
                   const Text(
                     "System Size ",
@@ -527,42 +556,42 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: 35,
-                          width: MediaQuery.of(context).size.width / 8.7,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              hintText: 'Min Value',
-                              hintStyle: TextStyle(fontSize: 12),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                            ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 30,
+                        width: 155,
+                        //  width: MediaQuery.of(context).size.width / 8.7,
+                        child: TextField(
+                          decoration: InputDecoration(
+                            hintText: 'Min Value',
+                            hintStyle: TextStyle(fontSize: 12),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5)),
                           ),
                         ),
-                        Container(
-                          height: 35,
-                          width: MediaQuery.of(context).size.width / 8.7,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              hintText: ' Max Value',
-                              hintStyle: TextStyle(fontSize: 12),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                            ),
+                      ),
+                      Container(
+                        height: 30,
+                        width: 155,
+                        // width: MediaQuery.of(context).size.width / 8.7,
+                        child: TextField(
+                          decoration: InputDecoration(
+                            hintText: ' Max Value',
+                            hintStyle: TextStyle(fontSize: 12),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5)),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-              
+
                   //21 and 22 textfield
                   const Text(
                     "Module Quantity ",
@@ -571,42 +600,42 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: 35,
-                          width: MediaQuery.of(context).size.width / 8.7,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              hintText: ' Min Value',
-                              hintStyle: TextStyle(fontSize: 12),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                            ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 30,
+                        width: 155,
+                        // width: MediaQuery.of(context).size.width / 8.7,
+                        child: TextField(
+                          decoration: InputDecoration(
+                            hintText: ' Min Value',
+                            hintStyle: TextStyle(fontSize: 12),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5)),
                           ),
                         ),
-                        Container(
-                          height: 35,
-                          width: MediaQuery.of(context).size.width / 8.7,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              hintText: ' Max Value',
-                              hintStyle: TextStyle(fontSize: 12),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                            ),
+                      ),
+                      Container(
+                        height: 30,
+                        width: 155,
+                        //  width: MediaQuery.of(context).size.width / 8.7,
+                        child: TextField(
+                          decoration: InputDecoration(
+                            hintText: ' Max Value',
+                            hintStyle: TextStyle(fontSize: 12),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5)),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-              
+
                   //23 textfield
                   const Text(
                     "Credit Date  ",
@@ -616,14 +645,15 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                     height: 10,
                   ),
                   Container(
-                    height: 35,
+                    height: 30,
                     child: TextField(
                       onTap: () {
                         showdatethree();
                       },
                       decoration: InputDecoration(
                         suffixIcon: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.only(
+                              left: 10.0, bottom: 2.0, right: 10),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -654,7 +684,7 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                           ),
                         ),
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10)),
+                            borderRadius: BorderRadius.circular(5)),
                       ),
                     ),
                   ),
@@ -668,7 +698,7 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                   const SizedBox(
                     height: 20,
                   ),
-              
+
                   Row(
                     children: [
                       Radio(
@@ -694,7 +724,7 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                       const Text("No"),
                     ],
                   ),
-              
+
                   const SizedBox(
                     height: 10,
                   ),
@@ -705,7 +735,7 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                   const SizedBox(
                     height: 20,
                   ),
-              
+
                   Row(
                     children: [
                       Radio(
@@ -729,7 +759,7 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                       const Text("No"),
                     ],
                   ),
-              
+
                   const SizedBox(
                     height: 10,
                   ),
@@ -740,7 +770,7 @@ class _SettingdrawerdatState extends State<Settingdrawerdat> {
                   const SizedBox(
                     height: 20,
                   ),
-              
+
                   Row(
                     children: [
                       Radio(

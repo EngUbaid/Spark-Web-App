@@ -11,11 +11,16 @@ class navigationprovider extends ChangeNotifier {
   }
 }
 
-
 class tableticonchanges extends ChangeNotifier {
   bool _istabletcolapsed = true;
 
   bool get istabletcolapsed => _istabletcolapsed;
+  //   void updateCollapseState(bool newValue) {
+  //   if (_iscolapsed != newValue) {
+  //     _iscolapsed = newValue;
+  //     notifyListeners();
+  //   }
+  // }
 
   tabletchangescolapse() {
     _istabletcolapsed = !istabletcolapsed;

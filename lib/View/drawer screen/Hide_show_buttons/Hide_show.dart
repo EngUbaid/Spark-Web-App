@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:spark/View/drawer%20screen/Adders/Adders.dart';
 import 'package:spark/View/drawer%20screen/Audit/Audit.dart';
 import 'package:spark/View/drawer%20screen/Costemer_Info/costemer_info.dart';
@@ -7,8 +8,10 @@ import 'package:spark/View/drawer%20screen/Install_Remarks/install_remarks.dart'
 import 'package:spark/View/drawer%20screen/Notes/Notes.dart';
 import 'package:spark/View/drawer%20screen/Operation/Operation.dart';
 import 'package:spark/View/drawer%20screen/add_job_data/add_job.dart';
+
 import 'package:spark/common/Add_Job_Textbutton.dart';
 import 'package:spark/common/Buttton.dart';
+
 
 class hideshodata extends StatefulWidget {
   const hideshodata({super.key});
@@ -19,19 +22,25 @@ class hideshodata extends StatefulWidget {
 
 class _hideshodataState extends State<hideshodata> {
   bool isswitches = false;
+
+  TextEditingController searchcontroler = TextEditingController();
   @override
   Widget build(BuildContext context) {
+ 
     return Wrap(
-      alignment: WrapAlignment.start,
-
-      //  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      runAlignment: WrapAlignment.start,
+      // textDirection:TextDirection.ltr,
+      runSpacing: 4.0,
       children: [
-        const Text("Hide Empty Stages"),
+        const Text(
+          "Hide Empty Stages",
+        ),
         const SizedBox(
-          width: 10,
+          width: 5,
         ),
         Transform.scale(
-          scale: 0.8,
+          scale: 0.75,
+          alignment: Alignment.topCenter,
           child: Switch(
             value: isswitches,
             onChanged: (value) {
@@ -42,14 +51,18 @@ class _hideshodataState extends State<hideshodata> {
           ),
         ),
         const SizedBox(
-          width: 10,
+          width: 5,
         ),
         Container(
             width: 250,
             height: 30,
             decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(8)),
+                color: Colors.white, borderRadius: BorderRadius.circular(5)),
             child: TextField(
+              controller: searchcontroler,
+              onChanged: (value) {
+                setState(() {});
+              },
               decoration: InputDecoration(
                 hintText: 'Search job',
                 suffixIcon: Container(
@@ -70,11 +83,11 @@ class _hideshodataState extends State<hideshodata> {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 9, vertical: 0),
+                    const EdgeInsets.symmetric(horizontal: 9, vertical: 2),
               ),
             )),
         const SizedBox(
-          width: 10,
+          width: 5,
         ),
         Buttons(
             color: Color.fromRGBO(22, 119, 255, 2),
@@ -127,6 +140,7 @@ class _hideshodataState extends State<hideshodata> {
 
 void showAddJobDialog(BuildContext context) {
   showDialog(
+    
     context: context,
     builder: (BuildContext context) {
       String selectedTab = "Job Info";
@@ -134,6 +148,10 @@ void showAddJobDialog(BuildContext context) {
       return StatefulBuilder(
         builder: (BuildContext context, StateSetter setState) {
           return AlertDialog(
+            backgroundColor: Colors.white,
+           shape: BeveledRectangleBorder(
+            borderRadius: BorderRadius.circular(5)
+           ),
             title: Column(children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
